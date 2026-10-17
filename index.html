@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080a10">
+  <meta name="description" content="مشغل Sahab TV لمكتبتك التلفزيونية عبر الإنترنت">
+  <title>SAHAB TV — عالم الترفيه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7z" fill="currentColor"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 8h4m-4 8h4m10-8h4m-4 8h4"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m8 2 4 3 4-3M8 22h8m-4-3v3"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 1 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 1 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 1 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 1 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 1 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 1 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 1 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 1 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5m5 5H3m9-9h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.4-3"/></symbol>
+  </svg>
+
+  <main id="loginScreen" class="login-screen">
+    <div class="login-art"><div class="art-orb orb-one"></div><div class="art-orb orb-two"></div><div class="art-copy"><span class="brand-mark">S</span><p>تجربتك السينمائية<br><strong>تبدأ من هنا</strong></p><span class="art-caption">كل ما تحب، في مكان واحد</span></div></div>
+    <section class="login-panel">
+      <div class="login-box">
+        <div class="brand brand-login"><span class="brand-mark">S</span><span>SAHAB <b>TV</b></span></div>
+        <p class="eyebrow">أهلاً بعودتك</p><h1>سجّل الدخول إلى حسابك</h1><p class="muted">أدخل بيانات مزود الخدمة للبدء بمشاهدة مكتبتك.</p>
+        <form id="loginForm" autocomplete="on">
+          <label for="serverUrl">رابط السيرفر</label><input id="serverUrl" name="serverUrl" type="url" placeholder="http://example.com:8080" autocomplete="url" required>
+          <div class="form-row"><div><label for="username">اسم المستخدم</label><input id="username" name="username" type="text" autocomplete="username" required></div><div><label for="password">كلمة المرور</label><input id="password" name="password" type="password" autocomplete="current-password" required></div></div>
+          <label for="proxyUrl">رابط الوسيط (Cloudflare Worker URL) <span class="optional">اختياري</span></label><input id="proxyUrl" name="proxyUrl" type="url" placeholder="https://your-worker.example.workers.dev">
+          <label class="check-line"><input id="proxyMedia" type="checkbox"><span>استخدم الوسيط لتشغيل الفيديو أيضاً</span></label>
+          <button class="button button-primary button-wide" type="submit"><span>دخول إلى المكتبة</span><svg><use href="#i-play"/></svg></button>
+          <p id="loginMessage" class="form-message" role="status"></p>
+        </form>
+        <p class="login-note">يلزم وجود اشتراك نشط لدى مزود الخدمة. بيانات الدخول تُحفظ محلياً في هذا المتصفح.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="appShell" class="app-shell hidden">
+    <aside class="sidebar">
+      <a href="#home" class="brand"><span class="brand-mark">S</span><span>SAHAB <b>TV</b></span></a>
+      <div class="nav-label">القائمة</div>
+      <nav class="main-nav" aria-label="التنقل الرئيسي">
+        <button class="nav-item active" data-page="home"><svg><use href="#i-home"/></svg><span>الرئيسية</span></button>
+        <button class="nav-item" data-page="movie"><svg><use href="#i-film"/></svg><span>الأفلام</span></button>
+        <button class="nav-item" data-page="series"><svg><use href="#i-grid"/></svg><span>المسلسلات</span></button>
+        <button class="nav-item" data-page="live"><svg><use href="#i-tv"/></svg><span>القنوات المباشرة</span><i class="live-dot"></i></button>
+      </nav>
+      <div class="sidebar-bottom"><div class="connection"><i class="status-dot"></i><span id="connectionLabel">متصل</span></div><button id="settingsButton" class="nav-item"><svg><use href="#i-settings"/></svg><span>الإعدادات</span></button><button id="logoutButton" class="nav-item logout-item"><svg><use href="#i-logout"/></svg><span>تسجيل الخروج</span></button><div class="sidebar-foot">SAHAB TV <span>نسخة الويب</span></div></div>
+    </aside>
+
+    <section class="main-column">
+      <header class="topbar"><button id="mobileMenuButton" class="icon-button mobile-menu" aria-label="فتح القائمة">☰</button><div class="topbar-title"><span id="pageKicker">اكتشف عالمك</span><strong id="pageTitle">الرئيسية</strong></div><div class="topbar-actions"><label class="search-box"><svg><use href="#i-search"/></svg><input id="globalSearch" type="search" placeholder="ابحث عن فيلم أو مسلسل…" autocomplete="off"></label><button id="accountBadge" class="account-badge" title="الإعدادات"><span class="avatar">ش</span><span id="accountName">حسابي</span></button></div></header>
+      <div id="networkNotice" class="network-notice hidden"></div>
+      <div id="homePage" class="page-content">
+        <section id="hero" class="hero"><div class="hero-backdrop"></div><div class="hero-content"><span class="hero-tag"><i></i> مختارات SAHAB</span><h1 id="heroTitle">عالم من الترفيه<br><span>بانتظارك</span></h1><p id="heroDescription">استكشف مكتبتك وشاهد ما تحب في أي وقت.</p><div class="hero-actions"><button id="heroPlay" class="button button-primary"><svg><use href="#i-play"/></svg><span>شاهد الآن</span></button><button id="heroExplore" class="button button-glass">استكشف المكتبة <span>←</span></button></div></div><div class="hero-index"><span>01</span><i></i><span>03</span></div><div class="hero-gradient"></div></section>
+        <div id="homeShelves" class="shelves"><section class="shelf" data-shelf="movie"><div class="section-heading"><div><span class="section-kicker">اختيارات لك</span><h2>أفلام مميزة</h2></div><button class="text-button" data-open-page="movie">عرض الكل <span>←</span></button></div><div class="card-row" id="homeMovie"></div></section><section class="shelf" data-shelf="series"><div class="section-heading"><div><span class="section-kicker">تابع الحكاية</span><h2>مسلسلات مختارة</h2></div><button class="text-button" data-open-page="series">عرض الكل <span>←</span></button></div><div class="card-row" id="homeSeries"></div></section><section class="shelf" data-shelf="live"><div class="section-heading"><div><span class="section-kicker">على الهواء الآن</span><h2>قنوات مباشرة</h2></div><button class="text-button" data-open-page="live">عرض الكل <span>←</span></button></div><div class="card-row live-row" id="homeLive"></div></section></div>
+      </div>
+      <section id="catalogPage" class="page-content catalog-page hidden"><div class="catalog-heading"><div><span id="catalogKicker" class="section-kicker">مكتبتك</span><h1 id="catalogTitle">الأفلام</h1></div><div class="catalog-controls"><label class="select-wrap"><span class="sr-only">اختر التصنيف</span><select id="categorySelect"><option value="0">كل التصنيفات</option></select></label><span id="resultCount" class="result-count"></span></div></div><div id="catalogGrid" class="catalog-grid"></div><div id="catalogLoading" class="loading-state hidden"><span class="spinner"></span><span>نحمّل مكتبتك…</span></div><div id="emptyState" class="empty-state hidden"><span class="empty-icon">⌕</span><h3>لا توجد نتائج هنا</h3><p>جرّب تصنيفاً آخر أو غيّر عبارة البحث.</p><button id="retryButton" class="button button-outline hidden">إعادة المحاولة</button></div><div id="scrollSentinel" class="scroll-sentinel"></div></section>
+      <footer class="main-footer"><span>SAHAB TV</span><span>مشاهدة ممتعة</span></footer>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="detailsDialog" class="app-dialog details-dialog"><button class="dialog-close" data-close="detailsDialog" aria-label="إغلاق"><svg><use href="#i-close"/></svg></button><div id="detailsContent"></div></dialog>
+  <dialog id="playerDialog" class="app-dialog player-dialog"><div class="player-top"><div><span class="player-live-mark hidden" id="playerLiveMark"><i></i> مباشر</span><h2 id="playerTitle">المشغل</h2></div><button class="dialog-close inline-close" data-close="playerDialog" aria-label="إغلاق"><svg><use href="#i-close"/></svg></button></div><div class="video-wrap"><video id="videoPlayer" controls playsinline crossorigin="anonymous"></video><div id="buffering" class="buffering"><span class="spinner"></span><span>جارٍ تحميل البث…</span></div></div><div id="playerWarning" class="player-warning hidden"></div><div class="player-controls"><label class="toggle-line"><input id="mediaProxyToggle" type="checkbox"><span class="toggle-ui"></span><span>تشغيل عبر الوسيط</span></label><button id="tryHlsButton" class="button button-outline hidden">جرّب صيغة M3U8</button><a id="downloadLink" class="button button-outline hidden" download><svg><use href="#i-download"/></svg> تنزيل</a></div></dialog>
+  <dialog id="settingsDialog" class="app-dialog settings-dialog"><button class="dialog-close" data-close="settingsDialog" aria-label="إغلاق"><svg><use href="#i-close"/></svg></button><div class="settings-content"><span class="section-kicker">إدارة الحساب</span><h2>الإعدادات</h2><p class="muted">يمكنك تحديث رابط الوسيط أو إعدادات التشغيل.</p><label for="settingsProxyUrl">رابط Cloudflare Worker الوسيط</label><input id="settingsProxyUrl" type="url" placeholder="https://your-worker.example.workers.dev"><label class="check-line"><input id="settingsProxyMedia" type="checkbox"><span>استخدم الوسيط افتراضياً للفيديو</span></label><div class="settings-actions"><button id="saveSettings" class="button button-primary">حفظ الإعدادات</button><button id="clearCache" class="button button-outline">مسح الكاش</button></div><p class="settings-warning">حسابك محفوظ في مساحة التخزين المحلية لهذا المتصفح. لا تستخدم جهازاً مشتركاً.</p></div></dialog>
+</body>
+</html>
